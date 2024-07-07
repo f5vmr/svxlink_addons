@@ -1,0 +1,120 @@
+    sudo apt-get install fetchmail
+	sudo apt-get install procmail
+	sudo apt-get install msmtp
+	sudo apt-get install mailutils
+	sudo apt-get install mpack
+    Configure FETCHMAIL  email retrieval system
+
+	cd /etc/default
+	sudo nano fetchmail
+
+...
+# Declare here if we want to start fetchmail. 'yes' or 'no' 
+START_DAEMON=yes 
+
+	cd /etc
+	sudo nano fetchmailrc
+
+# /etc/fetchmailrc for system-wide daemon mode
+# This file must be chmod 0600, owner fetchmail
+
+set daemon        300                # Pool every 5 minutes
+set syslog                           # log through syslog facility
+set postmaster    root
+
+set no bouncemail                    # avoid loss on 4xx errors
+                                     # on the other hand, 5xx errors get
+                                     # more dangerous...
+
+#############################################################
+# Hosts to pool
+#############################################################
+
+# Defaults ==============================================
+# Set antispam to -1, since it is far safer to use that together with
+# no bouncemail
+
+defaults:
+timeout 300
+antispam -1
+batchlimit 100
+
+poll imap.gmail.com
+protocol IMAP
+user "******@gmail.com" is svxlink
+password "********"
+folder 'INBOX'
+# fetchlimit 1
+fetchall
+# keep
+ssl
+mda "/usr/bin/procmail"
+
+	sudo chmod 0600 fetchmailrc
+	sudo reboot
+
+
+Configure PROCMAIL  mail delivery agent (MDA)
+
+	cd /etc
+	sudo nano procmailrc
+
+#############################################################
+LOGFILE=/home/pi/procmail.log
+
+VERBOSE=ON   # debug, should be switched to OFF later
+
+# Store received propagation alerts here
+MAILDIR=/usr/local/var/spool/svxlink/propagation_monitor
+
+# Put e-mails from the DXrobot (gooddx.net) in the folder below
+:0:
+* ^From.*DXrobot
+dxrobot
+
+# Put e-mails from VHFDX (vhfdx.net) in the folder below
+:0:
+* ^From.*dxmaps*
+vhfdx
+
+# Send all other, non matching e-mails, to /dev/null.
+# Replace "!root" with "/dev/null" to throw non-matching
+# e-mails away instead or comment both lines below out
+# to just let non-matching e-mails pass through.
+:0:
+/dev/null
+
+#
+# end of .procmailrc
+#############################################################
+
+	sudo reboot
+
+
+Configure MSMTP  sending email from the command line
+
+	cd /etc
+	sudo nano msmtp.conf
+
+account default
+host smtp.gmail.com
+port 587
+logfile /var/log/msmtp.log
+tls on
+tls_starttls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+auth login
+user gb3**.r@gmail.com
+password ****************
+from GB3**
+account account2
+
+	sudo reboot
+
+Notifications from vhfdx.net
+https://www.dxmaps.com/spots/warnings.php
+
+Notifications from dxrobot.com
+http://dxrobot.gooddx.net/mailman/listinfo
+
+
