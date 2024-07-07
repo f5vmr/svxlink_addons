@@ -92,7 +92,7 @@ vhfdx
 
 
 Configure MSMTP  sending email from the command line
-
+sudo cp /usr/share/doc/msmtp/examples/msmtprc-user.example /etc/msmtp.conf
 	cd /etc
 	sudo nano msmtp.conf
 
