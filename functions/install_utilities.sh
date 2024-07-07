@@ -23,4 +23,4 @@ for package in "${packages[@]}"; do
 done
 
 echo "All specified packages are installed."
-chmod +x install_packages.sh
+
