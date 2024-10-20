@@ -1,4 +1,8 @@
 #!/bin/bash
+#!/bin/bash
+
+whiptail --title "AppArmor Installation Note" \
+--msgbox "If AppArmor appears during the software installation process, please select 'No' to proceed without it." 10 60
 
 # Function to check and install a package
 check_and_install() {
@@ -23,7 +27,7 @@ for package in "${packages[@]}"; do
 done
 
 echo "All specified packages are installed."
-
+sudo cp ./configs/fetchmailrc /etc/fetchmailrc
 # Ensure START_DAEMON=yes is set in /etc/default/fetchmail
 sed -i '/START_DAEMON=/ c\START_DAEMON=yes' /etc/default/fetchmail || echo "START_DAEMON=yes" >> /etc/default/fetchmail
 # Update configurations in /etc/fetchmailrc
@@ -38,33 +42,7 @@ grep -q '^set syslog' /etc/fetchmailrc || echo 'set syslog' >> /etc/fetchmailrc
 grep -q '^set postmaster' /etc/fetchmailrc || echo 'set postmaster root' >> /etc/fetchmailrc
 grep -q '^set no bouncemail' /etc/fetchmailrc || echo 'set no bouncemail' >> /etc/fetchmailrc
 # Check and add configurations to /etc/fetchmailrc if they don't exist
-if ! grep -q "# Hosts to pool" /etc/fetchmailrc; then
-    cat << EOF >> /etc/fetchmailrc
-#############################################################
-# Hosts to pool
-#############################################################
 
-# Defaults ==============================================
-# Set antispam to -1, since it is far safer to use that together with
-# no bouncemail
-
-defaults:
-timeout 300
-antispam -1
-batchlimit 100
-
-poll imap.gmail.com
-protocol IMAP
-user "******@gmail.com" is svxlink
-password "********"
-folder 'INBOX'
-# fetchlimit 1
-fetchall
-# keep
-ssl
-mda "/usr/bin/procmail"
-EOF
-fi
 
 sudo cp /etc/fetchmail.rc /etc/fetchmail.rc.bak
 
@@ -82,7 +60,7 @@ fi
 #!/bin/bash
 
 password=$(whiptail --title "gmail Password Input" \
---passwordbox "Please enter your gmail password:" 10 70 3>&1 1>&2 2>&3)
+--passwordbox "Please enter your gmail password:" 10 60 3>&1 1>&2 2>&3)
 
 # Check if the user provided input or cancelled
 exitstatus=$?
