@@ -1,5 +1,4 @@
 #!/bin/bash
-#!/bin/bash
 
 whiptail --title "AppArmor Installation Note" \
 --msgbox "If AppArmor appears during the software installation process, please select 'No' to proceed without it." 10 60
