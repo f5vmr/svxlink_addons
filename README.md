@@ -5,3 +5,6 @@
 
 <p><b>3. Installation of the MessageService</b></p> 
 <p>Naturally you will be given the choice.</p>
+<h2><p>Darkice and Icecast2</p></h2>
+<p>If you have correctly configured your node with svxlinkbuilder, you will be given the choice to install the Darkice and Icecast2 streaming service. The Dummy Soundcard will have already been installed on your node.</p>
+<p>It remains for you to configure the Darkice and Icecast2 configuration.</p>
