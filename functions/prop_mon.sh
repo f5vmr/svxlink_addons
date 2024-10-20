@@ -66,5 +66,39 @@ mda "/usr/bin/procmail"
 EOF
 fi
 
+sudo cp /etc/fetchmail.rc /etc/fetchmail.rc.bak
+
+email=$(whiptail --title "gmail Address Input" \
+--inputbox "Please enter your full gmail address (e.g., username@gmail.com): for procmail" 10 60 3>&1 1>&2 2>&3)
+
+# Check if the user provided input or cancelled
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    echo "You entered: $email"
+else
+    echo "Input cancelled."
+fi
+
+#!/bin/bash
+
+password=$(whiptail --title "gmail Password Input" \
+--passwordbox "Please enter your gmail password:" 10 70 3>&1 1>&2 2>&3)
+
+# Check if the user provided input or cancelled
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    echo "Password entered."
+    
+    # Example of passing the password into the next command
+    # Here we are just echoing it, but you can replace this with your desired command
+    #echo "Your password is: $password"  # Replace this with your actual command
+else
+    echo "Password input cancelled."
+fi
+# Update the email in the /etc/fetchmail.rc file
+sudo sed -i "s/user \".*@gmail\.com\"/user \"$email\"/" /etc/fetchmail.rc
+
+# Update the password in the /etc/fetchmail.rc file
+sudo sed -i "s/password \".*\"/password \"$password\"/" /etc/fetchmail.rc
 # Set correct permissions for fetchmailrc
 chmod 600 /etc/fetchmailrc
