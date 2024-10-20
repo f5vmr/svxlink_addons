@@ -6,7 +6,7 @@ CHOICES=$(whiptail --title "SvxLink Addons" --checklist \
 "Select the addons you want to install:" 15 60 3 \
 "Streaming" "Install Darkice and Icecast2 Streaming service" OFF \
 "PropagationMonitor" "Install Svxlink PropagationMonitor" OFF \
-"VoiceMail" "Install MessageService" OFF \
+#"VoiceMail" "Install MessageService" OFF \
 3>&1 1>&2 2>&3)
 
 # Remove quotes from the result
@@ -26,10 +26,10 @@ for CHOICE in $CHOICES; do
             ./functions/prop_mon.sh
             INSTALLED_ADDONS+="Propagation Monitor, "
             ;;
-        "VoiceMail")
-            ./functions/voicemail.sh
-            INSTALLED_ADDONS+="VoiceMail, "
-            ;;
+#        "VoiceMail")
+#            ./functions/voicemail.sh
+#            INSTALLED_ADDONS+="VoiceMail, "
+#            ;;
     esac
 done
 
