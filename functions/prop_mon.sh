@@ -80,3 +80,34 @@ sudo sed -i "s/user \".*@gmail\.com\"/user \"$email\"/" /etc/fetchmail.rc
 sudo sed -i "s/password \".*\"/password \"$password\"/" /etc/fetchmail.rc
 # Set correct permissions for fetchmailrc
 chmod 600 /etc/fetchmailrc
+# Configure Procmail
+# located /etc/svxlink/.procmailrc
+#!/bin/bash
+
+# Replace the commented LOGFILE line with the new path
+#!/bin/bash
+
+# Replace the commented LOGFILE line and insert UMASK=0022 after it
+#!/bin/bash
+
+# Replace the commented LOGFILE line, insert UMASK=0022 after it, and replace !root with /dev/null
+sudo sed -i \
+    -e "/#LOGFILE=\$MAILDIR\/procmail.log/s|#LOGFILE=\$MAILDIR/procmail.log|LOGFILE=/var/log/procmail.log|; a UMASK=0022" \
+    -e "s|!root|/dev/null|" /etc/svxlink/.procmailrc
+
+echo "Updated LOGFILE, added UMASK=0022, and replaced !root with /dev/null in /etc/svxlink/.procmailrc"
+sudo touch /var/log/procmail.log
+cd /var/spool/svxlink/propagation_monitor
+sudo mkdir vhfdx
+sudo chmod 777 vhfdx
+cd vhfdx
+sudo mkdir archive
+sudo chmod 777 archive
+cd /var/spool/svxlink/propagation_monitor
+sudo mkdir dxrobot
+sudo chmod 777 dxrobot
+cd dxrobot
+sudo mkdir archive
+sudo chmod 777 archive
+# configure MSMTP
+
