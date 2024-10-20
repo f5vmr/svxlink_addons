@@ -75,3 +75,17 @@ whiptail --title "Darkice Service Setup" --msgbox "The Darkice service file has 
 sudo systemctl enable darkice --now
 
 whiptail --title "Darkice Service Activated" --msgbox "The Darkice service has been enabled and started. Your streaming service is now active." 10 60
+
+# Copy darkice.sh to /home/pi/scripts/
+sudo mkdir -p /home/pi/scripts
+sudo cp ./configs/darkice.sh /home/pi/scripts/
+
+# Add cron job to restart Darkice daily
+(crontab -l 2>/dev/null; echo "3 0 * * * /home/pi/scripts/darkice.sh") | sudo crontab -
+
+whiptail --title "Darkice Daily Restart" --msgbox "A script to restart Darkice has been added to /home/pi/scripts/ and a cron job has been set to run it daily at 3 minutes past midnight." 10 70
+
+# Enable and start the Icecast2 service
+sudo systemctl enable icecast2 --now
+
+whiptail --title "Icecast2 Service Activated" --msgbox "The Icecast2 service has been enabled and started. Your streaming server is now active and ready to receive streams." 10 70
