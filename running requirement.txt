@@ -1,9 +1,11 @@
     sudo apt-get install fetchmail
 	sudo apt-get install procmail
 	sudo apt-get install msmtp
+	sudo apt-get install msmtp-mta
 	sudo apt-get install mailutils
 	sudo apt-get install mpack
-    Configure FETCHMAIL  email retrieval system
+	sudo apt-get install ca-certificates
+#   Configure FETCHMAIL  email retrieval system
 
 	cd /etc/default
 	sudo nano fetchmail
@@ -51,8 +53,7 @@ ssl
 mda "/usr/bin/procmail"
 
 	sudo chmod 0600 fetchmailrc
-	sudo reboot
-
+	
 
 Configure PROCMAIL  mail delivery agent (MDA)
 
@@ -60,12 +61,12 @@ Configure PROCMAIL  mail delivery agent (MDA)
 	sudo nano procmailrc
 
 #############################################################
-LOGFILE=/home/pi/procmail.log
+LOGFILE=/var/log/procmail.log
 
 VERBOSE=ON   # debug, should be switched to OFF later
-
+UMASK=0022
 # Store received propagation alerts here
-MAILDIR=/usr/local/var/spool/svxlink/propagation_monitor
+MAILDIR=/var/spool/svxlink/propagation_monitor
 
 # Put e-mails from the DXrobot (gooddx.net) in the folder below
 :0:
@@ -88,13 +89,28 @@ vhfdx
 # end of .procmailrc
 #############################################################
 
-	sudo reboot
+	cd /var/log
+	sudo touch procmail.log
+	sudo nano procmail.log
+	cd /var/spool/svxlink/propagation_monitor
+	sudo mkdir vhfdx
+	sudo chmod 777 vhfdx
+	cd /var/spool/svxlink/propagation_monitor/vhfdx
+	sudo mkdir archive
+	sudo chmod 777 archive
+	cd /var/spool/svxlink/propagation_monitor
+	sudo mkdir dxrobot
+	sudo chmod 777 dxrobot
+	cd /var/spool/svxlink/propagation_monitor/dxrobot
+	sudo mkdir archive
+	sudo chmod 777 archive
 
 
 Configure MSMTP  sending email from the command line
-sudo cp /usr/share/doc/msmtp/examples/msmtprc-user.example /etc/msmtp.conf
+
 	cd /etc
-	sudo nano msmtp.conf
+	sudo touch msmtprc
+	sudo nano msmtprc
 
 account default
 host smtp.gmail.com

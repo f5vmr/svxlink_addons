@@ -11,10 +11,12 @@ check_and_install() {
 # List of packages to install
 packages=(
     fetchmail
-    procmail
-    msmtp
-    mailutils
-    mpack
+	procmail
+	msmtp
+	msmtp-mta
+	mailutils
+	mpack
+	ca-certificates
 )
 
 # Loop through the packages and install if not already installed
