@@ -122,7 +122,7 @@ tls_trust_file /etc/ssl/certs/ca-certificates.crt
 auth login
 user gb3**.r@gmail.com
 password ****************
-from GB3**
+from *****
 account account2
 
 	sudo reboot

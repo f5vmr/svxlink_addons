@@ -73,24 +73,19 @@ if [ $exitstatus = 0 ]; then
 else
     echo "Password input cancelled."
 fi
-# Update the email in the /etc/fetchmail.rc file
-sudo sed -i "s/user \".*@gmail\.com\"/user \"$email\"/" /etc/fetchmail.rc
+# Update the email in the /etc/fetchmailrc file
+sudo sed -i "s/user \".*@gmail\.com\"/user \"$email\"/" /etc/fetchmailrc
 
 # Update the password in the /etc/fetchmail.rc file
-sudo sed -i "s/password \".*\"/password \"$password\"/" /etc/fetchmail.rc
+sudo sed -i "s/password \".*\"/password \"$password\"/" /etc/fetchmailrc
 # Set correct permissions for fetchmailrc
 chmod 600 /etc/fetchmailrc
 # Configure Procmail
 # located /etc/svxlink/.procmailrc
-#!/bin/bash
-
 # Replace the commented LOGFILE line with the new path
-#!/bin/bash
-
 # Replace the commented LOGFILE line and insert UMASK=0022 after it
-#!/bin/bash
-
 # Replace the commented LOGFILE line, insert UMASK=0022 after it, and replace !root with /dev/null
+
 sudo sed -i \
     -e "/#LOGFILE=\$MAILDIR\/procmail.log/s|#LOGFILE=\$MAILDIR/procmail.log|LOGFILE=/var/log/procmail.log|; a UMASK=0022" \
     -e "s|!root|/dev/null|" /etc/svxlink/.procmailrc
@@ -110,4 +105,7 @@ cd dxrobot
 sudo mkdir archive
 sudo chmod 777 archive
 # configure MSMTP
-
+sudo cp /configs/msmtprc /etc/msmtprc
+sudo sed -i "s/user \"******@gmail\.com\"/user \"$email\"/" /etc/msmtprc
+sudo sed -i "s/password \".*\"/password \"$password\"/" /etc/msmtprc
+sudo sed -i "s/^from .*/from $name/" /etc/msmtprc
