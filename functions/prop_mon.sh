@@ -56,7 +56,7 @@ else
     echo "Input cancelled."
 fi
 
-#!/bin/bash
+
 
 password=$(whiptail --title "gmail Password Input" \
 --passwordbox "Please enter your gmail password:" 10 60 3>&1 1>&2 2>&3)
