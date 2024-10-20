@@ -62,6 +62,23 @@ FULL_URL="http://$DOMAIN_NAME:$NEW_PORT/$NEW_MOUNTPOINT"
 sudo sed -i "s|url = the full url to include domain and :8000 and /stream|url = $FULL_URL|" /etc/darkice.cfg
 
 whiptail --title "URL Updated" --msgbox "Your stream URL has been updated in the darkice.cfg file to: $FULL_URL" 10 60
+# Ask user for stream description
+STREAM_DESCRIPTION=$(whiptail --inputbox "Enter a description for your stream:" 8 60 "Live binaural stream for headphones" --title "Stream Description" 3>&1 1>&2 2>&3)
+
+# Update the description in the darkice.cfg file
+sudo sed -i "s/description = Live binaural stream for headphones/description = $STREAM_DESCRIPTION/" /etc/darkice.cfg
+
+# Ask if the stream is for public consumption
+if (whiptail --title "Public Stream" --yesno "Is this stream for public consumption?" 8 60); then
+    PUBLIC_SETTING="yes"
+else
+    PUBLIC_SETTING="no"
+fi
+
+# Update the public setting in the darkice.cfg file
+sudo sed -i "s/public = yes/public = $PUBLIC_SETTING/" /etc/darkice.cfg
+
+whiptail --title "Stream Settings Updated" --msgbox "Your stream description and public setting have been updated in the darkice.cfg file." 8 60
 
 # Copy the darkice.service file to the systemd directory
 sudo cp ./configs/darkice.service /etc/systemd/system/
@@ -89,3 +106,4 @@ whiptail --title "Darkice Daily Restart" --msgbox "A script to restart Darkice h
 sudo systemctl enable icecast2 --now
 
 whiptail --title "Icecast2 Service Activated" --msgbox "The Icecast2 service has been enabled and started. Your streaming server is now active and ready to receive streams." 10 70
+
