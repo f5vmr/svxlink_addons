@@ -26,7 +26,7 @@ for package in "${packages[@]}"; do
 done
 
 echo "All specified packages are installed."
-sudo cp ./configs/fetchmailrc /etc/fetchmailrc
+sudo cp configs/fetchmailrc /etc/fetchmailrc
 # Ensure START_DAEMON=yes is set in /etc/default/fetchmail
 sed -i '/START_DAEMON=/ c\START_DAEMON=yes' /etc/default/fetchmail || echo "START_DAEMON=yes" >> /etc/default/fetchmail
 # Update configurations in /etc/fetchmailrc

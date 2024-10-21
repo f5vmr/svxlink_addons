@@ -19,15 +19,15 @@ INSTALLED_ADDONS=""
 for CHOICE in $CHOICES; do
     case $CHOICE in
         "Streaming")
-            ./functions/streaming.sh
+            functions/streaming.sh
             INSTALLED_ADDONS+="Streaming, "
             ;;
         "PropagationMonitor")
-            ./functions/prop_mon.sh
+            functions/prop_mon.sh
             INSTALLED_ADDONS+="Propagation Monitor, "
             ;;
 #        "VoiceMail")
-#            ./functions/voicemail.sh
+#            functions/voicemail.sh
 #            INSTALLED_ADDONS+="VoiceMail, "
 #            ;;
     esac

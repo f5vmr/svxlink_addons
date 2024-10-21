@@ -7,7 +7,7 @@ whiptail --title "Icecast2 Installation" --msgbox "Icecast2 is about to be insta
 sudo apt-get install -y darkice icecast2
 
 # Copy the pre-configured darkice.cfg file
-sudo cp ./configs/darkice.cfg /etc/darkice.cfg
+sudo cp configs/darkice.cfg /etc/darkice.cfg
 
 # Ask user about server configuration
 if (whiptail --title "Server Configuration" --yesno "The current server in darkice.cfg is set to 'localhost'. Do you want to change it?" 10 60); then
@@ -81,7 +81,7 @@ sudo sed -i "s/public = yes/public = $PUBLIC_SETTING/" /etc/darkice.cfg
 whiptail --title "Stream Settings Updated" --msgbox "Your stream description and public setting have been updated in the darkice.cfg file." 8 60
 
 # Copy the darkice.service file to the systemd directory
-sudo cp ./configs/darkice.service /etc/systemd/system/
+sudo cp configs/darkice.service /etc/systemd/system/
 
 # Reload the systemd daemon
 sudo systemctl daemon-reload
@@ -95,7 +95,7 @@ whiptail --title "Darkice Service Activated" --msgbox "The Darkice service has b
 
 # Copy darkice.sh to /home/pi/scripts/
 sudo mkdir -p /home/pi/scripts
-sudo cp ./configs/darkice.sh /home/pi/scripts/
+sudo cp configs/darkice.sh /home/pi/scripts/
 
 # Add cron job to restart Darkice daily
 (crontab -l 2>/dev/null; echo "3 0 * * * /home/pi/scripts/darkice.sh") | sudo crontab -
