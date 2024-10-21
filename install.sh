@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/pi/svxlink-addons
+
 
 whiptail --title "SvxLink Addons" --msgbox "Welcome to the SvxLink Addons. Press Enter to continue." 10 60
 
