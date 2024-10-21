@@ -106,7 +106,7 @@ cd dxrobot
 sudo mkdir archive
 sudo chmod 777 archive
 # configure MSMTP
-cd $FUNCTIONS_DIR
+cd svxlink_addons
 sudo cp "$CONFIGS_DIR/msmtprc" /etc/msmtprc
 sudo sed -i "s/user \"******@gmail\.com\"/user \"$email\"/" /etc/msmtprc
 sudo sed -i "s/password \".*\"/password \"$password\"/" /etc/msmtprc
