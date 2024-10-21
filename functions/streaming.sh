@@ -1,13 +1,13 @@
 #!/bin/bash
 # Function to check and install a Darkice and Icecast2 packages
-
+cd /home/pi/svxlink-addons/functions/
 # Add Whiptail information box before installation
 whiptail --title "Icecast2 Installation" --msgbox "Icecast2 is about to be installed. During the installation, you will be prompted to enter passwords. Please make sure to remember these passwords as they will be needed later." 12 60
 
 sudo apt-get install -y darkice icecast2
 
 # Copy the pre-configured darkice.cfg file
-sudo cp configs/darkice.cfg /etc/darkice.cfg
+sudo cp ../configs/darkice.cfg /etc/darkice.cfg
 
 # Ask user about server configuration
 if (whiptail --title "Server Configuration" --yesno "The current server in darkice.cfg is set to 'localhost'. Do you want to change it?" 10 60); then
@@ -94,8 +94,7 @@ sudo systemctl enable darkice --now
 whiptail --title "Darkice Service Activated" --msgbox "The Darkice service has been enabled and started. Your streaming service is now active." 10 60
 
 # Copy darkice.sh to /home/pi/scripts/
-sudo mkdir -p /home/pi/scripts
-sudo cp configs/darkice.sh /home/pi/scripts/
+sudo cp ../configs/darkice.sh /home/pi/scripts/
 
 # Add cron job to restart Darkice daily
 (crontab -l 2>/dev/null; echo "3 0 * * * /home/pi/scripts/darkice.sh") | sudo crontab -
@@ -106,4 +105,5 @@ whiptail --title "Darkice Daily Restart" --msgbox "A script to restart Darkice h
 sudo systemctl enable icecast2 --now
 
 whiptail --title "Icecast2 Service Activated" --msgbox "The Icecast2 service has been enabled and started. Your streaming server is now active and ready to receive streams." 10 60
+cd  /home/pi/
 

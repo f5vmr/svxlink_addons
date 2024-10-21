@@ -1,6 +1,5 @@
 #!/bin/bash
-FUNCTIONS_DIR="$(dirname "$0")/functions"
-CONFIGS_DIR="$(dirname "$0")/configs"
+cd /home/pi/svxlink-addons
 
 whiptail --title "SvxLink Addons" --msgbox "Welcome to the SvxLink Addons. Press Enter to continue." 10 60
 
@@ -21,11 +20,11 @@ INSTALLED_ADDONS=""
 for CHOICE in $CHOICES; do
     case $CHOICE in
         "Streaming")
-            sudo bash "$FUNCTIONS_DIR/streaming.sh"
+            sudo ./functions/streaming.sh"
             INSTALLED_ADDONS+="Streaming, "
             ;;
         "PropagationMonitor")
-            sudo bash "$FUNCTION_DIR/prop_mon.sh"
+            sudo ./functions/prop_mon.sh"
             INSTALLED_ADDONS+="Propagation Monitor, "
             ;;
 #        "VoiceMail")
@@ -34,7 +33,7 @@ for CHOICE in $CHOICES; do
 #            ;;
     esac
 done
-
+cd /home/pi/svxlink-addons
 # Remove trailing comma and space
 INSTALLED_ADDONS=${INSTALLED_ADDONS%, }
 

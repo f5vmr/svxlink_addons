@@ -1,5 +1,5 @@
 #!/bin/bash
-CONFIGS_DIR="$1"
+cd /home/pi/svxlink_addons/functions
 
 
 whiptail --title "AppArmor Installation Note" \
@@ -28,7 +28,7 @@ for package in "${packages[@]}"; do
 done
 
 echo "All specified packages are installed."
-sudo cp "$CONFIGS_DIR/fetchmailrc" /etc/fetchmailrc
+sudo cp ../configs/fetchmailrc /etc/fetchmailrc
 # Ensure START_DAEMON=yes is set in /etc/default/fetchmail
 sed -i '/START_DAEMON=/ c\START_DAEMON=yes' /etc/default/fetchmail || echo "START_DAEMON=yes" >> /etc/default/fetchmail
 # Update configurations in /etc/fetchmailrc
@@ -106,8 +106,8 @@ cd dxrobot
 sudo mkdir archive
 sudo chmod 777 archive
 # configure MSMTP
-cd svxlink_addons
-sudo cp "$CONFIGS_DIR/msmtprc" /etc/msmtprc
+cd /home/pi/svxlink_addons
+sudo cp ../configs/msmtprc /etc/msmtprc
 sudo sed -i "s/user \"******@gmail\.com\"/user \"$email\"/" /etc/msmtprc
 sudo sed -i "s/password \".*\"/password \"$password\"/" /etc/msmtprc
 sudo sed -i "s/^from .*/from $name/" /etc/msmtprc
